@@ -1,0 +1,86 @@
+44. How to schedule notebooks in databricks || Databricks Interview question and answers
+
+
+> two types of cluster
+* Job Cluster
+1. Databricks scheduler will create job cluster
+2. job cluster cant be used to execute interactive notebooks
+3. we cant stop and restart job cluster
+4. it is less cost comapred to all purpose
+5. it is maninly used in production environment
+
+  
+* All purpose Cluster or interactive cluster 
+1. user should create it
+2. user should terminate it
+3. It is costly, as it will continously running
+4. it is used for development environment to develop code
+5. multiple users can use same cluster to execute their code
+6. you can stop, restart all purpose cluster
+
+
+
+Q2. How to call one notebook from another notebook
+> %run notebookpath parameters : we can access child notebook variables and functions
+> dbutils.notebook.run(notebookpath,timeout,parameters) : we can't access child notebook variables and functions
+
+
+Q3). How to return output of one notebook to another notebook 
+ > > %run notebookpath parameters : we can access child notebook variables and functions
+ > >  dbutils.notebook.run(notebookpath,timeout,parameters) : we can't access child notebook variables and functions
+ > dbutils.notebook.exit("we can use to return output of current notebook to parent notebook)
+
+Q4). How to connect to data lake storage from databricks
+> App registration
+> app reg should have storage blob contributor access to storage account
+> we can use dbutils.fs.mount command to create mount point for data lake storage
+using app registration, appid, secretvalue, directory id , storage name and container name
+
+
+Q5). What is the difference between cache vs persist
+> Both are optimization techniques used to cache the intermedidate data in the memory
+cache will use default storage level as memory_and_disk
+persist we can pass custom storage level as 
+memory_only
+memory_and_disk
+disk_only
+disk_only_2
+etc
+
+Q6). What is lazy evaluation in spark
+transformation will not execute until we apply action , this process is called lazy evaluation
+
+
+Q7). what are the spark operations
+spark operations are transformation and actions
+transformation --> narrow(select,filter,map) and wide (join,repartition, groupBy,reduceByKey)
+actions ---> count,collect,show,top,take,head
+
+
+Q8). What are the differences between csv vs parquet file
+
+parquet is columnar and csv is row based
+parquet is compressed and csv is not compressed
+parquet is not human readable and csv is human readable
+parquet is best for readinf and csv is best for writing data
+
+
+Q9). what are the difference between parquet vs delta formats
+parquet file formats, we can delete, update and merge data  and also we cant go back to restore to previous version or previous day data
+delta file formats, we can delete , update and merge data and also we can go back to restore to previous versions or timestamps and also delta can detect schema changes , underlying delta format also maintains data in parquet along with that it maintains delta logs
+
+
+Q10). What are the spark features
+In memory
+high speed
+partitions
+parallelism
+real time data processing
+lazy evaluation
+resilient
+
+
+Q11). what is the difference between rdd vs dataframe 
+RDD - it will not infer schema of data, it is recommended for unstructure data and rdd is resilient distribute dataset which distributes collection of elements across workers nodes and execute them in parallel, it is slower compared to dataframe as we dont have catalyst optimizer in rdd
+
+DF -> it is named columns or it will inferschema of data, it uses catalyst optimizer to improve performance, thats why it is faster compared to rdd and it is recommended for structure and semi-structure data,
